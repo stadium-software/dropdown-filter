@@ -35,7 +35,7 @@ input.setAttribute("placeholder", "Filter");
 container.appendChild(input);
 
 function populateFilterOptions() {
-    let optionsDiv = document.querySelector(".dropdown-filter-options-container");
+    let optionsDiv = ddContainer.querySelector(".dropdown-filter-options-container");
     if (optionsDiv) {
         optionsDiv.remove();
     }
