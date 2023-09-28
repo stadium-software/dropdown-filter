@@ -2,7 +2,7 @@
 
 When dropdowns contain many items, finding an item can be cumbersome and frustrating. Here is a simple example of how to add a filter to a dropdown. 
 
-https://github.com/stadium-software/dropdown-filter/assets/2085324/53d8cea9-beab-4f2a-b5c4-dbb7621530d1
+https://github.com/stadium-software/dropdown-filter/assets/2085324/0118ecde-1d76-471a-8308-127d3f31fd0a
 
 ## Application Setup
 1. Check the *Enable Style Sheet* checkbox in the application properties
