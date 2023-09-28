@@ -1,3 +1,8 @@
 :root {
-    
+    --dropdown-filter-background-color: #f9f9f9;
+    --dropdown-filter-border-color: #ccc;
+    --dropdown-filter-rightleft-padding: 12px;
+    --dropdown-filter-topbottom-padding: 6px;
+    --dropdown-filter-odd-option-background-color: #f1f1f1f1;
+    --dropdown-filter-height: 200px;
 }
