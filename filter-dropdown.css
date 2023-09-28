@@ -35,7 +35,7 @@
 
     & .dropdown-filter-option {
         cursor: pointer;
-        padding: var(--dropdown-filter-topbottom-padding) var(--dropdown-filter-rightleft-padding);
+        padding: var(--dropdown-filter-option-topbottom-padding) var(--dropdown-filter-option-rightleft-padding);
         white-space: nowrap;
     }
 
