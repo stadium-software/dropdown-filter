@@ -7,11 +7,11 @@ https://github.com/stadium-software/dropdown-filter/assets/2085324/0118ecde-1d76
 ## Application Setup
 1. Check the *Enable Style Sheet* checkbox in the application properties
 
-## Script Setup
+## Global Script Setup
 1. Create a Global Script called "FilterDropdown"
 2. Add two Input parameters to the Global Script
-   1. CaseSensitive (a boolean)
-   2. DropDownClassName (a string)
+   1. CaseSensitive
+   2. DropDownClassName
 3. Drag a JavaScript action into the script
 4. Add the Javascript below into the JavaScript code property (ignore the validation error message "Invalid script was detected")
 ```
@@ -35,7 +35,7 @@ input.setAttribute("placeholder", "Filter");
 container.appendChild(input);
 
 function populateFilterOptions() {
-    let optionsDiv = document.querySelector(".dropdown-filter-options-container");
+    let optionsDiv = ddContainer.querySelector(".dropdown-filter-options-container");
     if (optionsDiv) {
         optionsDiv.remove();
     }
@@ -118,8 +118,8 @@ observer.observe(dd, options);
 
 ## DropDown Setup
 1. Drag a DropDown Control to the page
-2. Add a unique classname of your choise to the DropDown classes property (e.g. my-dropdown-filter)
-3. Populate the DropDown with data (static, in the Page.Load event or in any other script)
+2. Add a unique classname of your choice to the DropDown classes property (e.g. my-dropdown-filter)
+3. Populate the DropDown with data
 
 ## Page.Load Event Setup
 1. Drag the "FilterDropdown" script into the Page.Load event
