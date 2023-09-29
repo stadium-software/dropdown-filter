@@ -9,14 +9,17 @@ https://github.com/stadium-software/dropdown-filter/assets/2085324/0118ecde-1d76
 
 ## Global Script Setup
 1. Create a Global Script called "FilterDropdown"
-2. Add two Input parameters to the Global Script
+2. Add three input parameters to the Global Script
    1. CaseSensitive
    2. DropDownClassName
+   3. StartsWith
 3. Drag a JavaScript action into the script
 4. Add the Javascript below into the JavaScript code property (ignore the validation error message "Invalid script was detected")
 ```
 const className = ~.Parameters.Input.DropDownClassName;
 const caseSensitive = ~.Parameters.Input.CaseSensitive;
+const startsWith = ~.Parameters.Input.StartsWith;
+
 const ddContainer = document.querySelector("." + className);
 ddContainer.classList.add("stadium-dropdown-filter");
 const dd = ddContainer.querySelector("select");
@@ -82,10 +85,12 @@ input.addEventListener("input", function () {
             needle = needle.toLowerCase();
             heystack = heystack.toLowerCase();
         }
-        if (heystack.indexOf(needle) == -1) {
-            filterOptions[i].classList.add("hide");
-        } else {
+        if (startsWith && heystack.indexOf(needle) == 0) {
             filterOptions[i].classList.remove("hide");
+        } else if (!startsWith && heystack.indexOf(needle) > -1) {
+            filterOptions[i].classList.remove("hide");
+        } else {
+            filterOptions[i].classList.add("hide");
         }
     }
 });
@@ -124,15 +129,14 @@ observer.observe(dd, options);
 ## Page.Load Event Setup
 1. Drag the "FilterDropdown" script into the Page.Load event
 2. Enter the classname of the FilterDropdown into the *DropDownClassName* input parameter (e.g. my-dropdown-filter)
-3. If you want the filter to be case insensitive, add *false* into the *CaseSensitive* Input Parameter (it's true by default)
+3. By default string comparisons are case sensitive. If you want the filter to be case insensitive, add *false* into the *CaseSensitive* input parameter
+4. By default the filter matches strings using *Contains*. To change this to *StartsWith*, enter *true* in the into the *StartsWith* input parameter
 
 ## Customising CSS
-The *filter-dropdown-variables.css* file included in this repo contains a set of variables that can be changed to customise the dropdown filter. Follow the steps below to customise your implementation
 1. Open the CSS file called [*filter-dropdown-variables.css*](filter-dropdown-variables.css) from this repo in an editor of your choice (I recommend [VS Code](https://code.visualstudio.com/))
 2. Adjust the variables in the *:root* element as you see fit
 
 ## Applying the CSS
-How to apply the CSS to your application
 1. Create a folder called *CSS* inside of your Embedded Files in your application
 2. Drag the two CSS files from this repo [*filter-dropdown-variables.css*](filter-dropdown-variables.css) and [*filter-dropdown.css*](filter-dropdown.css) into that folder
 
