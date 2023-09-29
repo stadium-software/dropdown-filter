@@ -133,7 +133,7 @@ observer.observe(dd, options);
 4. By default the filter matches strings using *Contains*. To change this to *StartsWith*, enter *true* in the into the *StartsWith* input parameter
 
 ## Customising CSS
-1. Open the CSS file called [*filter-dropdown-variables.css*](filter-dropdown-variables.css) from this repo in an editor of your choice (I recommend [VS Code](https://code.visualstudio.com/))
+1. Open the CSS file called [*filter-dropdown-variables.css*](filter-dropdown-variables.css) from this repo
 2. Adjust the variables in the *:root* element as you see fit
 
 ## Applying the CSS
@@ -148,4 +148,4 @@ observer.observe(dd, options);
 ``` 
 
 ## CSS Upgrading
-To upgrade thje CSS in this module, follow the [steps outlined in this repo](https://github.com/stadium-software/samples-upgrading)
+To upgrade the CSS in this module, follow the [steps outlined in this repo](https://github.com/stadium-software/samples-upgrading)
