@@ -140,12 +140,15 @@ observer.observe(dd, options);
 1. Create a folder called *CSS* inside of your Embedded Files in your application
 2. Drag the two CSS files from this repo [*filter-dropdown-variables.css*](filter-dropdown-variables.css) and [*filter-dropdown.css*](filter-dropdown.css) into that folder
 
-#### Stadium 6 (versions 6.6 and above)
+#### Stadium 6.6 and up
 1. Paste the link tags below into the *head* property of your application
 ```
 <link rel="stylesheet" href="{EmbeddedFiles}/CSS/filter-dropdown.css">
 <link rel="stylesheet" href="{EmbeddedFiles}/CSS/filter-dropdown-variables.css">
 ``` 
+
+#### All lower versions
+1. Copy the CSS from the two css files into the Stylesheet in your application
 
 ## CSS Upgrading
 To upgrade the CSS in this module, follow the [steps outlined in this repo](https://github.com/stadium-software/samples-upgrading)
