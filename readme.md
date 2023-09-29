@@ -129,7 +129,7 @@ observer.observe(dd, options);
 ## Page.Load Event Setup
 1. Drag the "FilterDropdown" script into the Page.Load event
 2. Enter the classname of the FilterDropdown into the *DropDownClassName* input parameter (e.g. my-dropdown-filter)
-3. By default string comparisons are case sensitive. If you want the filter to be case insensitive, add *false* into the *CaseSensitive* input parameter
+3. By default string comparisons are not case sensitive. If you want the filter to be case sensitive, add *true* into the *CaseSensitive* input parameter
 4. By default the filter matches strings using *Contains*. To change this to *StartsWith*, enter *true* in the into the *StartsWith* input parameter
 
 ## Customising CSS
