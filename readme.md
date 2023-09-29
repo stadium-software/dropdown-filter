@@ -137,11 +137,11 @@ observer.observe(dd, options);
 2. Adjust the variables in the *:root* element as you see fit
 
 ## Applying the CSS
-1. Create a folder called *CSS* inside of your Embedded Files in your application
-2. Drag the two CSS files from this repo [*filter-dropdown-variables.css*](filter-dropdown-variables.css) and [*filter-dropdown.css*](filter-dropdown.css) into that folder
 
 **Stadium 6.6 or higher**
-1. Paste the link tags below into the *head* property of your application
+1. Create a folder called *CSS* inside of your Embedded Files in your application
+2. Drag the two CSS files from this repo [*filter-dropdown-variables.css*](filter-dropdown-variables.css) and [*filter-dropdown.css*](filter-dropdown.css) into that folder
+3. Paste the link tags below into the *head* property of your application
 ```
 <link rel="stylesheet" href="{EmbeddedFiles}/CSS/filter-dropdown.css">
 <link rel="stylesheet" href="{EmbeddedFiles}/CSS/filter-dropdown-variables.css">
