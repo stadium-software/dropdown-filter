@@ -15,7 +15,7 @@ https://github.com/stadium-software/dropdown-filter/assets/2085324/0118ecde-1d76
    3. StartsWith
 3. Drag a JavaScript action into the script
 4. Add the Javascript below into the JavaScript code property (ignore the validation error message "Invalid script was detected")
-```
+```javascript
 const className = ~.Parameters.Input.DropDownClassName;
 const caseSensitive = ~.Parameters.Input.CaseSensitive;
 const startsWith = ~.Parameters.Input.StartsWith;
@@ -142,7 +142,7 @@ observer.observe(dd, options);
 1. Create a folder called *CSS* inside of your Embedded Files in your application
 2. Drag the two CSS files from this repo [*filter-dropdown-variables.css*](filter-dropdown-variables.css) and [*filter-dropdown.css*](filter-dropdown.css) into that folder
 3. Paste the link tags below into the *head* property of your application
-```
+```html
 <link rel="stylesheet" href="{EmbeddedFiles}/CSS/filter-dropdown.css">
 <link rel="stylesheet" href="{EmbeddedFiles}/CSS/filter-dropdown-variables.css">
 ``` 
