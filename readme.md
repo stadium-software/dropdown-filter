@@ -4,6 +4,9 @@ When dropdowns contain many items, finding an item can be cumbersome and frustra
 
 https://github.com/stadium-software/dropdown-filter/assets/2085324/0118ecde-1d76-471a-8308-127d3f31fd0a
 
+# Version 
+1.1 Added logic to detect uniqueness of DropDown classname on page
+
 ## Application Setup
 1. Check the *Enable Style Sheet* checkbox in the application properties
 
@@ -16,14 +19,22 @@ https://github.com/stadium-software/dropdown-filter/assets/2085324/0118ecde-1d76
 3. Drag a JavaScript action into the script
 4. Add the Javascript below into the JavaScript code property (ignore the validation error message "Invalid script was detected")
 ```javascript
-const className = ~.Parameters.Input.DropDownClassName;
-const caseSensitive = ~.Parameters.Input.CaseSensitive;
-const startsWith = ~.Parameters.Input.StartsWith;
-
-const ddContainer = document.querySelector("." + className);
+const className = "." + ~.Parameters.Input.DropDownClassName;
+let ddContainer = document.querySelectorAll(className);
+if (ddContainer.length == 0) {
+    ddContainer = document.querySelector(".drop-down-container");
+} else if (ddContainer.length > 1) {
+    console.error("The class '" + className + "' is assigned to multiple DropDowns. Every filterable DropDown must have a unique classname");
+    return false;
+} else { 
+    ddContainer = ddContainer[0];
+}
 ddContainer.classList.add("stadium-dropdown-filter");
 const dd = ddContainer.querySelector("select");
 const parent = dd.parentElement;
+
+const caseSensitive = ~.Parameters.Input.CaseSensitive;
+const startsWith = ~.Parameters.Input.StartsWith;
 
 let container = document.createElement("div");
 container.classList.add("dropdown-filter-container");
@@ -105,7 +116,7 @@ dd.addEventListener("mousedown", function (e) {
     input.focus();
 });
 document.body.addEventListener("click", function (e) {
-    if (!e.target.closest("." + className)) {
+    if (!e.target.closest(className)) {
         container.classList.remove("show");
         resetDropDown();
     }
