@@ -125,6 +125,7 @@ observer.observe(dd, options);
 1. Drag a DropDown Control to the page
 2. Add a unique classname of your choice to the DropDown classes property (e.g. my-dropdown-filter)
 3. Populate the DropDown with data
+4. Note: If multiple filterable dropdowns are shown on one page, each DropDown must have a unique classname
 
 ## Page.Load Event Setup
 1. Drag the "FilterDropdown" script into the Page.Load event
