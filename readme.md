@@ -4,6 +4,10 @@ When dropdowns contain many items, finding an item can be cumbersome and frustra
 
 https://github.com/stadium-software/dropdown-filter/assets/2085324/0118ecde-1d76-471a-8308-127d3f31fd0a
 
+## Sample applications
+This repo contains one Stadium 6.7 application
+[DropDownFilter.sapz](Stadium6/DropDownFilter.sapz?raw=true)
+
 # Version 
 1.1 Added logic to detect uniqueness of DropDown classname on page
 
