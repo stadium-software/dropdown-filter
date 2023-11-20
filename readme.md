@@ -23,6 +23,7 @@ This repo contains one Stadium 6.7 application
 3. Drag a JavaScript action into the script
 4. Add the Javascript below into the JavaScript code property (ignore the validation error message "Invalid script was detected")
 ```javascript
+/* Stadium Script Version 1.1 */
 const className = "." + ~.Parameters.Input.DropDownClassName;
 let ddContainer = document.querySelectorAll(className);
 if (ddContainer.length == 0) {
