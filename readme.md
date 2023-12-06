@@ -10,6 +10,7 @@ This repo contains one Stadium 6.7 application
 
 # Version 
 1.1 Added logic to detect uniqueness of DropDown classname on page
+1.2 Fixed RequiredFieldValidator bug (JS & CSS)
 
 ## Application Setup
 1. Check the *Enable Style Sheet* checkbox in the application properties
@@ -23,7 +24,7 @@ This repo contains one Stadium 6.7 application
 3. Drag a JavaScript action into the script
 4. Add the Javascript below into the JavaScript code property (ignore the validation error message "Invalid script was detected")
 ```javascript
-/* Stadium Script Version 1.1 */
+/* Stadium Script version 1.2 */
 const className = "." + ~.Parameters.Input.DropDownClassName;
 let ddContainer = document.querySelectorAll(className);
 if (ddContainer.length == 0) {
@@ -34,7 +35,6 @@ if (ddContainer.length == 0) {
 } else { 
     ddContainer = ddContainer[0];
 }
-ddContainer.classList.add("stadium-dropdown-filter");
 const dd = ddContainer.querySelector("select");
 const parent = dd.parentElement;
 
@@ -53,6 +53,15 @@ input.classList.add("form-control");
 input.setAttribute("placeholder", "Filter");
 container.appendChild(input);
 
+let selectOption = (e) => {
+    dd.value = e.target.getAttribute("value");
+    let hintOption = dd.querySelector(".option-hint");
+    if (hintOption) dd.querySelector(".option-hint").classList.add("hide");
+    dd.classList.remove("select-option-hint");
+    container.classList.remove("show");
+    resetDropDown();
+    dd.dispatchEvent(ev);
+};
 function populateFilterOptions() {
     let optionsDiv = ddContainer.querySelector(".dropdown-filter-options-container");
     if (optionsDiv) {
@@ -69,15 +78,7 @@ function populateFilterOptions() {
             option.classList.add("dropdown-filter-option");
             option.setAttribute("value", options[i].value);
             option.textContent = options[i].text;
-            option.addEventListener("click", function (e) {
-                dd.value = e.target.getAttribute("value");
-                let hintOption = dd.querySelector(".option-hint");
-                if (hintOption) dd.querySelector(".option-hint").classList.add("hide");
-                dd.classList.remove("select-option-hint");
-                container.classList.remove("show");
-                resetDropDown();
-                dd.dispatchEvent(ev);
-            });
+            option.addEventListener("click", selectOption);
             optionsContainer.appendChild(option);
         }
     }

@@ -1,4 +1,4 @@
-.stadium-dropdown-filter {
+.drop-down-container:has(.dropdown-filter-container) {
     position: relative;
 
     & .dropdown-filter-container {
