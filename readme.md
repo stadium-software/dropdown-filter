@@ -10,6 +10,7 @@ This repo contains one Stadium 6.7 application
 
 # Version 
 1.1 Added logic to detect uniqueness of DropDown classname on page
+
 1.2 Fixed RequiredFieldValidator bug (JS & CSS)
 
 ## Application Setup
