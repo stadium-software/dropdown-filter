@@ -23,7 +23,7 @@ This repo contains one Stadium 6.7 application
    2. DropDownClassName
    3. StartsWith
 3. Drag a JavaScript action into the script
-4. Add the Javascript below into the JavaScript code property (ignore the validation error message "Invalid script was detected")
+4. Add the Javascript below into the JavaScript code property
 ```javascript
 /* Stadium Script version 1.2 */
 const className = "." + ~.Parameters.Input.DropDownClassName;
