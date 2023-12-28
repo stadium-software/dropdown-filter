@@ -25,7 +25,7 @@
         scrolllbar-gutter: stable;
     }
 
-    & .dropdown-filter-options-container > div:nth-child(odd) {
+    & .dropdown-filter-options-container > div:nth-child(odd of :not(.hide)) {
         background-color: var(--dropdown-filter-odd-option-background-color);
     }
 
