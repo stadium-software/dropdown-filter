@@ -25,7 +25,7 @@ This repo contains one Stadium 6.7 application
 3. Drag a JavaScript action into the script
 4. Add the Javascript below into the JavaScript code property
 ```javascript
-/* Stadium Script version 1.2 */
+/* Stadium Script version 1.2 https://github.com/stadium-software/dropdown-filter */
 const className = "." + ~.Parameters.Input.DropDownClassName;
 let ddContainer = document.querySelectorAll(className);
 if (ddContainer.length == 0) {
