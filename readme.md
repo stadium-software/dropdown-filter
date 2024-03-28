@@ -157,6 +157,8 @@ observer.observe(dd, options);
 
 ## Applying the CSS
 
+The CSS below is required for the correct functioning of the module. Some elements can be [customised](#customising-css) using a variables CSS file.
+
 **Stadium 6.6 or higher**
 1. Create a folder called *CSS* inside of your Embedded Files in your application
 2. Drag the two CSS files from this repo [*filter-dropdown-variables.css*](filter-dropdown-variables.css) and [*filter-dropdown.css*](filter-dropdown.css) into that folder
