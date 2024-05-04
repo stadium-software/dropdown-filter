@@ -9,9 +9,13 @@ This repo contains one Stadium 6.7 application
 [DropDownFilter.sapz](Stadium6/DropDownFilter.sapz?raw=true)
 
 # Version 
+Current version 1.3
+
 1.1 Added logic to detect uniqueness of DropDown classname on page
 
 1.2 Fixed RequiredFieldValidator bug (JS & CSS)
+
+1.3 Fixed "controls in template" bug
 
 ## Application Setup
 1. Check the *Enable Style Sheet* checkbox in the application properties
@@ -25,11 +29,17 @@ This repo contains one Stadium 6.7 application
 3. Drag a JavaScript action into the script
 4. Add the Javascript below into the JavaScript code property
 ```javascript
-/* Stadium Script version 1.2 https://github.com/stadium-software/dropdown-filter */
-const className = "." + ~.Parameters.Input.DropDownClassName;
+/* Stadium Script version 1.3 https://github.com/stadium-software/dropdown-filter */
+let classInput = ~.Parameters.Input.DropDownClassName;
+if (typeof classInput == "undefined") {
+    console.error("The DropDownClassName parameter is required");
+    return false;
+} 
+let className = "." + classInput;
 let ddContainer = document.querySelectorAll(className);
 if (ddContainer.length == 0) {
-    ddContainer = document.querySelector(".drop-down-container");
+    console.error("The class '" + className + "' is not assigned toany DropDown");
+    return false;
 } else if (ddContainer.length > 1) {
     console.error("The class '" + className + "' is assigned to multiple DropDowns. Every filterable DropDown must have a unique classname");
     return false;
@@ -54,6 +64,12 @@ input.classList.add("form-control");
 input.setAttribute("placeholder", "Filter");
 container.appendChild(input);
 
+let observerOptions = {
+    characterData: true,
+    childList: true,
+    subtree: true,
+},
+observer = new MutationObserver(populateFilterOptions);
 let selectOption = (e) => {
     dd.value = e.target.getAttribute("value");
     let hintOption = dd.querySelector(".option-hint");
@@ -64,6 +80,7 @@ let selectOption = (e) => {
     dd.dispatchEvent(ev);
 };
 function populateFilterOptions() {
+    observer.disconnect();
     let optionsDiv = ddContainer.querySelector(".dropdown-filter-options-container");
     if (optionsDiv) {
         optionsDiv.remove();
@@ -84,6 +101,7 @@ function populateFilterOptions() {
         }
     }
     container.appendChild(optionsContainer);
+    observer.observe(dd, observerOptions);
 }
 function resetDropDown() {
     let filterOptions = ddContainer.querySelectorAll(".dropdown-filter-option");
@@ -128,15 +146,6 @@ document.body.addEventListener("click", function (e) {
         resetDropDown();
     }
 });
-let options = {
-    characterData: true,
-    attributes: false,
-    childList: true,
-    subtree: true,
-    characterDataOldValue: true,
-},
-observer = new MutationObserver(populateFilterOptions);
-observer.observe(dd, options);
 ```
 
 ## DropDown Setup
