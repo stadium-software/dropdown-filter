@@ -13,6 +13,8 @@ Current version 1.3
 
 1.3 Fixed "controls in template" bug
 
+1.4 Switched from Dom to DatModel; added version to CSS files
+
 ## Application Setup
 1. Check the *Enable Style Sheet* checkbox in the application properties
 
@@ -25,7 +27,8 @@ Current version 1.3
 3. Drag a JavaScript action into the script
 4. Add the Javascript below into the JavaScript code property
 ```javascript
-/* Stadium Script version 1.3 https://github.com/stadium-software/dropdown-filter */
+/* Stadium Script version 1.4 https://github.com/stadium-software/dropdown-filter */
+let scope = this;
 let classInput = ~.Parameters.Input.DropDownClassName;
 if (typeof classInput == "undefined") {
     console.error("The DropDownClassName parameter is required");
@@ -75,6 +78,18 @@ let selectOption = (e) => {
     resetDropDown();
     dd.dispatchEvent(ev);
 };
+let getObjectName = (obj) => {
+    let objname = obj.id.replace("-container","");
+    do {
+        let arrNameParts = objname.split(/_(.*)/s);
+        objname = arrNameParts[1];
+    } while ((objname.match(/_/g) || []).length > 0 && !scope[`${objname}Classes`]);
+    return objname;
+};
+function getDMValues(ob, property) {
+    let obname = getObjectName(ob);
+    return scope[`${obname}${property}`];
+}
 function populateFilterOptions() {
     observer.disconnect();
     let optionsDiv = ddContainer.querySelector(".dropdown-filter-options-container");
@@ -85,16 +100,14 @@ function populateFilterOptions() {
     let optionsContainer = document.createElement("div");
     optionsContainer.classList.add("dropdown-filter-options-container");
 
-    let options = dd.options;
+    let options = getDMValues(ddContainer, "Options");
     for (let i = 0; i < options.length; i++) {
-        if (!options[i].classList.contains("option-hint")) {
-            let option = document.createElement("div");
-            option.classList.add("dropdown-filter-option");
-            option.setAttribute("value", options[i].value);
-            option.textContent = options[i].text;
-            option.addEventListener("click", selectOption);
-            optionsContainer.appendChild(option);
-        }
+        let option = document.createElement("div");
+        option.classList.add("dropdown-filter-option");
+        option.setAttribute("value", options[i].value);
+        option.textContent = options[i].text;
+        option.addEventListener("click", selectOption);
+        optionsContainer.appendChild(option);
     }
     container.appendChild(optionsContainer);
     observer.observe(dd, observerOptions);
