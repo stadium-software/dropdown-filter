@@ -13,7 +13,7 @@ Current version 1.3
 
 1.3 Fixed "controls in template" bug
 
-1.4 Switched from Dom to DatModel; added version to CSS files
+1.4 Switched from Dom to DataModel; added version to CSS files
 
 ## Application Setup
 1. Check the *Enable Style Sheet* checkbox in the application properties
