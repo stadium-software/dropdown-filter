@@ -2,7 +2,7 @@
 
 When dropdowns contain many items, finding an item can be cumbersome and frustrating. Here is a simple example of how to add a filter to a dropdown. 
 
-https://github.com/stadium-software/dropdown-filter/assets/2085324/0118ecde-1d76-471a-8308-127d3f31fd0a
+![](images/view.gif)
 
 # Version 
 Current version 1.4
@@ -15,6 +15,8 @@ Current version 1.4
 
 1.4 Switched from Dom to DataModel; added version to CSS files
 
+1.4.1 Replaced px with rem; updated readme to 6.12+
+
 ## Application Setup
 1. Check the *Enable Style Sheet* checkbox in the application properties
 
@@ -25,7 +27,7 @@ Current version 1.4
    2. DropDownClassName
    3. StartsWith
 3. Drag a JavaScript action into the script
-4. Add the Javascript below into the JavaScript code property
+4. Add the Javascript below unchanged into the JavaScript code property
 ```javascript
 /* Stadium Script version 1.4 https://github.com/stadium-software/dropdown-filter */
 let scope = this;
@@ -169,16 +171,11 @@ document.body.addEventListener("click", function (e) {
 3. By default string comparisons are not case sensitive. If you want the filter to be case sensitive, add *true* into the *CaseSensitive* input parameter
 4. By default the filter matches strings using *Contains*. To change this to *StartsWith*, enter *true* into the *StartsWith* input parameter
 
-## Customising CSS
-1. Open the CSS file called [*filter-dropdown-variables.css*](filter-dropdown-variables.css) from this repo
-2. Adjust the variables in the *:root* element as you see fit
+## CSS
+The CSS below is required for the correct functioning of the module. Variables exposed in the [*filter-dropdown-variables.css*](filter-dropdown-variables.css) file can be [customised](#customising-css).
 
-## Applying the CSS
-
-The CSS below is required for the correct functioning of the module. Some elements can be [customised](#customising-css) using a variables CSS file.
-
-**Stadium 6.6 or higher**
-1. Create a folder called *CSS* inside of your Embedded Files in your application
+### Before v6.12
+1. Create a folder called "CSS" inside of your Embedded Files in your application
 2. Drag the two CSS files from this repo [*filter-dropdown-variables.css*](filter-dropdown-variables.css) and [*filter-dropdown.css*](filter-dropdown.css) into that folder
 3. Paste the link tags below into the *head* property of your application
 ```html
@@ -186,8 +183,28 @@ The CSS below is required for the correct functioning of the module. Some elemen
 <link rel="stylesheet" href="{EmbeddedFiles}/CSS/filter-dropdown-variables.css">
 ``` 
 
-**Versions lower than 6.6**
-1. Copy the CSS from the two css files into the Stylesheet in your application
+### v6.12+
+1. Create a folder called "CSS" inside of your Embedded Files in your application
+2. Drag the CSS files from this repo [*filter-dropdown.css*](filter-dropdown.css) into that folder
+3. Paste the link tag below into the *head* property of your application
+```html
+<link rel="stylesheet" href="{EmbeddedFiles}/CSS/filter-dropdown.css">
+``` 
 
-## CSS Upgrading
-To upgrade the CSS in this module, follow the [steps outlined in this repo](https://github.com/stadium-software/samples-upgrading)
+### Customising CSS
+1. Open the CSS file called [*filter-dropdown-variables.css*](filter-dropdown-variables.css) from this repo
+2. Adjust the variables in the *:root* element as you see fit
+3. Stadium 6.12+ users can comment out any variable they do **not** want to customise
+4. Add the [*filter-dropdown-variables.css*](filter-dropdown-variables.css) to the "CSS" folder in the EmbeddedFiles (overwrite)
+5. Paste the link tag below into the *head* property of your application (if you don't already have it there)
+```html
+<link rel="stylesheet" href="{EmbeddedFiles}/CSS/filter-dropdown-variables.css">
+``` 
+6. Add the file to the "CSS" inside of your Embedded Files in your application
+
+**NOTE: Do not change any of the CSS in the 'filter-dropdown.css' file**
+
+## Upgrading Stadium Repos
+Stadium Repos are not static. They change as additional features are added and bugs are fixed. Using the right method to work with Stadium Repos allows for upgrading them in a controlled manner. 
+
+How to use and update application repos is described here: [Working with Stadium Repos](https://github.com/stadium-software/samples-upgrading)
