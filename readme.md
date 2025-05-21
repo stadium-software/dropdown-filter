@@ -17,6 +17,8 @@ Current version 1.4
 
 1.4.1 Replaced px with rem; updated readme to 6.12+
 
+1.5 Adding code to allow the script to be called multiple times on the same page
+
 ## Application Setup
 1. Check the *Enable Style Sheet* checkbox in the application properties
 
@@ -29,7 +31,7 @@ Current version 1.4
 3. Drag a JavaScript action into the script
 4. Add the Javascript below unchanged into the JavaScript code property
 ```javascript
-/* Stadium Script version 1.4 https://github.com/stadium-software/dropdown-filter */
+/* Stadium Script version 1.5 https://github.com/stadium-software/dropdown-filter */
 let scope = this;
 let classInput = ~.Parameters.Input.DropDownClassName;
 if (typeof classInput == "undefined") {
@@ -53,7 +55,12 @@ const parent = dd.parentElement;
 const caseSensitive = ~.Parameters.Input.CaseSensitive;
 const startsWith = ~.Parameters.Input.StartsWith;
 
-let container = document.createElement("div");
+let container = parent.querySelector(".dropdown-filter-container");
+if (container) {
+    container.remove();
+}
+
+container = document.createElement("div");
 container.classList.add("dropdown-filter-container");
 parent.appendChild(container);
 
@@ -170,6 +177,9 @@ document.body.addEventListener("click", function (e) {
 2. Enter the classname of the FilterDropdown into the *DropDownClassName* input parameter (e.g. my-dropdown-filter)
 3. By default string comparisons are not case sensitive. If you want the filter to be case sensitive, add *true* into the *CaseSensitive* input parameter
 4. By default the filter matches strings using *Contains*. To change this to *StartsWith*, enter *true* into the *StartsWith* input parameter
+
+## DropDown Data Update
+The script only needs to be called once to initialise the *DropDown* control as a filterable dropdown. Just use a *SetValue* to assign a new dataset to the *DropDown* control to update the *DropDown* options. 
 
 ## CSS
 The CSS below is required for the correct functioning of the module. Variables exposed in the [*filter-dropdown-variables.css*](filter-dropdown-variables.css) file can be [customised](#customising-css).
