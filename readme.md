@@ -5,8 +5,6 @@ When dropdowns contain many items, finding an item can be cumbersome and frustra
 ![](images/view.gif)
 
 # Version 
-Current version 1.4
-
 1.1 Added logic to detect uniqueness of DropDown classname on page
 
 1.2 Fixed RequiredFieldValidator bug (JS & CSS)
@@ -18,6 +16,8 @@ Current version 1.4
 1.4.1 Replaced px with rem; updated readme to 6.12+
 
 1.5 Adding code to allow the script to be called multiple times on the same page
+
+1.6 Integrated CSS with script
 
 ## Application Setup
 1. Check the *Enable Style Sheet* checkbox in the application properties
@@ -31,7 +31,7 @@ Current version 1.4
 3. Drag a JavaScript action into the script
 4. Add the Javascript below unchanged into the JavaScript code property
 ```javascript
-/* Stadium Script version 1.5 https://github.com/stadium-software/dropdown-filter */
+/* Stadium Script version 1.6 https://github.com/stadium-software/dropdown-filter */
 let scope = this;
 let classInput = ~.Parameters.Input.DropDownClassName;
 if (typeof classInput == "undefined") {
@@ -128,7 +128,7 @@ function resetDropDown() {
     }
     input.value = "";
 }
-
+loadCSS();
 populateFilterOptions();
 input.addEventListener("input", function () {
     let filterOptions = ddContainer.querySelectorAll(".dropdown-filter-option");
@@ -148,6 +148,70 @@ input.addEventListener("input", function () {
         }
     }
 });
+function loadCSS() {
+    let moduleID = "stadium-dropdown-filter";
+    if (!document.getElementById(moduleID)) {
+        let cssMain = document.createElement("style");
+        cssMain.id = moduleID;
+        cssMain.type = "text/css";
+        cssMain.textContent = `
+.drop-down-container:has(.dropdown-filter-container) {
+    position: relative;
+
+    .dropdown-filter-container {
+        display: none;
+        position: absolute;
+        z-index: 10;
+        top: 3.3rem;
+        left: -0.1rem;
+        min-width: calc(100% - 1.6rem);
+        box-shadow: rgba(0, 0, 0, 0.07) 0 0.1rem 0.1rem, rgba(0, 0, 0, 0.07) 0 0.2rem 0.2rem, rgba(0, 0, 0, 0.07) 0 0.4rem 0.4rem, rgba(0, 0, 0, 0.07) 0 0.8rem 0.8rem, rgba(0, 0, 0, 0.07) 0 1.6rem 1.6rem;
+    	border: 0.1rem solid var(--dropdown-filter-border-color, var(--GENERAL-BORDER-COLOR));
+        background-color: var(--dropdown-filter-background-color, var(--DARKER-GREY));
+    }
+
+    .dropdown-filter-container.show {
+        display: block;
+    }
+
+    .dropdown-filter-options-container {
+        display: flex;
+        max-height: var(--dropdown-filter-height, 20rem);
+        flex-direction: column;
+        overflow-y: auto;
+        scrolllbar-gutter: stable;
+    }
+
+    .dropdown-filter-options-container > div:nth-child(odd of :not(.hide)) {
+        background-color: var(--dropdown-filter-odd-option-background-color, var(--LIGHT-GREY));
+    }
+
+    input {
+        width: 100%;
+    }
+
+    .dropdown-filter-option {
+        cursor: pointer;
+        padding: var(--dropdown-filter-option-topbottom-padding, 0.6rem) var(--dropdown-filter-option-rightleft-padding, 1.2rem);
+        white-space: nowrap;
+    }
+
+    .dropdown-filter-option.hide {
+        display: none;
+    }
+
+    .option-hint.hide {
+        display: none;
+    }
+}
+html {
+    min-height: 100%;
+    font-size: 62.5%;
+}        
+        `;
+        document.head.appendChild(cssMain);
+    }
+}
 input.addEventListener("blur", function () {
     if (input.value == "") {
         resetDropDown();
@@ -184,23 +248,6 @@ The script only needs to be called once to initialise the *DropDown* control as 
 ## CSS
 The CSS below is required for the correct functioning of the module. Variables exposed in the [*filter-dropdown-variables.css*](filter-dropdown-variables.css) file can be [customised](#customising-css).
 
-### Before v6.12
-1. Create a folder called "CSS" inside of your Embedded Files in your application
-2. Drag the two CSS files from this repo [*filter-dropdown-variables.css*](filter-dropdown-variables.css) and [*filter-dropdown.css*](filter-dropdown.css) into that folder
-3. Paste the link tags below into the *head* property of your application
-```html
-<link rel="stylesheet" href="{EmbeddedFiles}/CSS/filter-dropdown.css">
-<link rel="stylesheet" href="{EmbeddedFiles}/CSS/filter-dropdown-variables.css">
-``` 
-
-### v6.12+
-1. Create a folder called "CSS" inside of your Embedded Files in your application
-2. Drag the CSS files from this repo [*filter-dropdown.css*](filter-dropdown.css) into that folder
-3. Paste the link tag below into the *head* property of your application
-```html
-<link rel="stylesheet" href="{EmbeddedFiles}/CSS/filter-dropdown.css">
-``` 
-
 ### Customising CSS
 1. Open the CSS file called [*filter-dropdown-variables.css*](filter-dropdown-variables.css) from this repo
 2. Adjust the variables in the *:root* element as you see fit
@@ -211,8 +258,6 @@ The CSS below is required for the correct functioning of the module. Variables e
 <link rel="stylesheet" href="{EmbeddedFiles}/CSS/filter-dropdown-variables.css">
 ``` 
 6. Add the file to the "CSS" inside of your Embedded Files in your application
-
-**NOTE: Do not change any of the CSS in the 'filter-dropdown.css' file**
 
 ## Upgrading Stadium Repos
 Stadium Repos are not static. They change as additional features are added and bugs are fixed. Using the right method to work with Stadium Repos allows for upgrading them in a controlled manner. 
