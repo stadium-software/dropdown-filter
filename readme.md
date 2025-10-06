@@ -246,7 +246,7 @@ document.body.addEventListener("click", function (e) {
 The script only needs to be called once to initialise the *DropDown* control as a filterable dropdown. Just use a *SetValue* to assign a new dataset to the *DropDown* control to update the *DropDown* options. 
 
 ## CSS
-The CSS below is required for the correct functioning of the module. Variables exposed in the [*filter-dropdown-variables.css*](filter-dropdown-variables.css) file can be [customised](#customising-css).
+Variables exposed in the [*filter-dropdown-variables.css*](filter-dropdown-variables.css) file can be [customised](#customising-css).
 
 ### Customising CSS
 1. Open the CSS file called [*filter-dropdown-variables.css*](filter-dropdown-variables.css) from this repo
