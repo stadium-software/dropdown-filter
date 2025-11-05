@@ -19,6 +19,8 @@ When dropdowns contain many items, finding an item can be cumbersome and frustra
 
 1.6 Integrated CSS with script
 
+2.0 Changed the visual design of the filter input and options
+
 ## Application Setup
 1. Check the *Enable Style Sheet* checkbox in the application properties
 
@@ -31,7 +33,7 @@ When dropdowns contain many items, finding an item can be cumbersome and frustra
 3. Drag a JavaScript action into the script
 4. Add the Javascript below unchanged into the JavaScript code property
 ```javascript
-/* Stadium Script version 1.6 https://github.com/stadium-software/dropdown-filter */
+/* Stadium Script version 2.0 https://github.com/stadium-software/dropdown-filter */
 let scope = this;
 let classInput = ~.Parameters.Input.DropDownClassName;
 if (typeof classInput == "undefined") {
@@ -41,36 +43,41 @@ if (typeof classInput == "undefined") {
 let className = "." + classInput;
 let ddContainer = document.querySelectorAll(className);
 if (ddContainer.length == 0) {
-    console.error("The class '" + className + "' is not assigned toany DropDown");
+    console.error("The class '" + className + "' is not assigned to any DropDown");
     return false;
 } else if (ddContainer.length > 1) {
     console.error("The class '" + className + "' is assigned to multiple DropDowns. Every filterable DropDown must have a unique classname");
     return false;
-} else { 
-    ddContainer = ddContainer[0];
 }
+ddContainer = ddContainer[0];
 const dd = ddContainer.querySelector("select");
-const parent = dd.parentElement;
 
 const caseSensitive = ~.Parameters.Input.CaseSensitive;
 const startsWith = ~.Parameters.Input.StartsWith;
 
-let container = parent.querySelector(".dropdown-filter-container");
+let container = ddContainer.querySelector(".dropdown-filter-container");
 if (container) {
     container.remove();
 }
 
 container = document.createElement("div");
 container.classList.add("dropdown-filter-container");
-parent.appendChild(container);
+ddContainer.appendChild(container);
 
 const ev = new Event("change");
 dd.addEventListener("change", () => { }, false);
 
+let inputContainer = document.createElement("div");
+inputContainer.classList.add("dropdown-filter-input-container");
 let input = document.createElement("input");
-input.classList.add("form-control");
+input.classList.add("form-control", "dropdown-filter-input");
 input.setAttribute("placeholder", "Filter");
-container.appendChild(input);
+let inputClear = document.createElement("div");
+inputClear.classList.add("dropdown-filter-clear");
+inputClear.addEventListener("click", resetDropDown);
+inputContainer.appendChild(input);
+inputContainer.appendChild(inputClear);
+container.appendChild(inputContainer);
 
 let observerOptions = {
     characterData: true,
@@ -127,6 +134,8 @@ function resetDropDown() {
         filterOptions[i].classList.remove("hide");
     }
     input.value = "";
+    input.focus();
+    inputClear.classList.remove("show-inline-grid");
 }
 loadCSS();
 populateFilterOptions();
@@ -157,58 +166,79 @@ function loadCSS() {
         cssMain.textContent = `
 .drop-down-container:has(.dropdown-filter-container) {
     position: relative;
-
     .dropdown-filter-container {
         display: none;
         position: absolute;
         z-index: 10;
-        top: 3.3rem;
-        left: -0.1rem;
-        min-width: calc(100% - 1.6rem);
+        top: 0;
+        left: 0;
+        min-width: calc(100% - var(--CONTROL-CONTAINER-RIGHT-PADDING, 1.6rem));
         box-shadow: rgba(0, 0, 0, 0.07) 0 0.1rem 0.1rem, rgba(0, 0, 0, 0.07) 0 0.2rem 0.2rem, rgba(0, 0, 0, 0.07) 0 0.4rem 0.4rem, rgba(0, 0, 0, 0.07) 0 0.8rem 0.8rem, rgba(0, 0, 0, 0.07) 0 1.6rem 1.6rem;
-    	border: 0.1rem solid var(--dropdown-filter-border-color, var(--GENERAL-BORDER-COLOR));
-        background-color: var(--dropdown-filter-background-color, var(--DARKER-GREY));
+        background-color: var(--dropdown-filter-background-color, var(--BODY-BACKGROUND-COLOR));
+        border: 1px solid var(--dropdown-filter-border-color, var(--FORM-CONTROL-BORDER-COLOR));
     }
-
     .dropdown-filter-container.show {
         display: block;
     }
-
     .dropdown-filter-options-container {
         display: flex;
         max-height: var(--dropdown-filter-height, 20rem);
         flex-direction: column;
         overflow-y: auto;
-        scrolllbar-gutter: stable;
     }
-
-    .dropdown-filter-options-container > div:nth-child(odd of :not(.hide)) {
-        background-color: var(--dropdown-filter-odd-option-background-color, var(--LIGHT-GREY));
+    .dropdown-filter-input-container {
+        position: relative;
     }
-
-    input {
+    .dropdown-filter-input {
         width: 100%;
+        border-top: 0;
+        border-right: 0;
+        border-left: 0;
     }
-
+    .dropdown-filter-clear {
+        display: none;
+        position: absolute;
+        top: 0;
+        right: 0;
+        height: 100%;
+        width: 3.8rem;
+        cursor: pointer;
+        place-items: center;
+    }
+    .dropdown-filter-clear:after {
+        content: "";
+        height: 24px;
+        width: 24px;
+        background-color: var(--dropdown-filter-odd-option-background-color, var(--DARK-GREY));
+        mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1em' height='1em' viewBox='0 0 24 24'%3E%3Cpath fill='currentColor' d='M18.36 19.78L12 13.41l-6.36 6.37l-1.42-1.42L10.59 12L4.22 5.64l1.42-1.42L12 10.59l6.36-6.36l1.41 1.41L13.41 12l6.36 6.36z'/%3E%3C/svg%3E");
+        mask-repeat: no-repeat;
+        mask-position: center;
+        mask-size: contain;
+    }
     .dropdown-filter-option {
         cursor: pointer;
         padding: var(--dropdown-filter-option-topbottom-padding, 0.6rem) var(--dropdown-filter-option-rightleft-padding, 1.2rem);
         white-space: nowrap;
     }
-
-    .dropdown-filter-option.hide {
-        display: none;
+    .dropdown-filter-option:nth-child(odd of :not(.hide)) {
+        background-color: var(--dropdown-filter-odd-option-background-color, var(--LIGHT-GREY));
     }
-
+    .dropdown-filter-option:hover,
+    .dropdown-filter-option:nth-child(odd of :not(.hide)):hover {
+        background-color: var(--dropdown-filter-option-hover-background-color, var(--DARKER-GREY, #f9f9f9));
+    }
+    .dropdown-filter-option.hide,
     .option-hint.hide {
         display: none;
+    }
+    .show-inline-grid {
+        display: inline-grid;
     }
 }
 html {
     min-height: 100%;
     font-size: 62.5%;
-}        
-        `;
+}    `;
         document.head.appendChild(cssMain);
     }
 }
@@ -217,9 +247,20 @@ input.addEventListener("blur", function () {
         resetDropDown();
     }
 });
+input.addEventListener("keyup", function () {
+    if (input.value !== "") {
+        inputClear.classList.add("show-inline-grid");
+    }
+});
 dd.addEventListener("mousedown", function (e) {
     e.preventDefault();
     container.classList.toggle("show");
+    let selectedOption = getDMValues(ddContainer, "SelectedOption");
+    if (selectedOption.text != '') {
+        input.placeholder = selectedOption.text;
+    } else { 
+        input.placeholder = "Filter";
+    }
     input.focus();
 });
 document.body.addEventListener("click", function (e) {
